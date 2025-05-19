@@ -5,13 +5,19 @@ import {
 	OptionType,
 	fontFamilyOptions,
 	defaultArticleState,
+	fontSizeOptions,
+	fontColors,
+	backgroundColors,
+	contentWidthArr,
 } from '../../constants/articleProps';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { Text } from 'src/ui/text';
 import { Select } from 'src/ui/select';
+import { RadioGroup } from 'src/ui/radio-group';
 
 import styles from './ArticleParamsForm.module.scss';
+import { Separator } from 'src/ui/separator';
 
 type ArticleParamsFormProps = {
 	initialSettings: ArticleStateType;
@@ -45,6 +51,34 @@ export const ArticleParamsForm = ({
 		});
 	};
 
+	const handleFontSizeChange = (selected: OptionType) => {
+		setFormState({
+			...formState,
+			fontSizeOption: selected,
+		});
+	};
+
+	const handleFontColorChange = (selected: OptionType) => {
+		setFormState({
+			...formState,
+			fontColor: selected,
+		});
+	};
+
+	const handleBackgroundColorChange = (selected: OptionType) => {
+		setFormState({
+			...formState,
+			backgroundColor: selected,
+		});
+	};
+
+	const handleContentWidthChange = (selected: OptionType) => {
+		setFormState({
+			...formState,
+			contentWidth: selected,
+		});
+	};
+
 	return (
 		<>
 			<ArrowButton isOpen={isOpen} onClick={toggleForm} />
@@ -59,6 +93,32 @@ export const ArticleParamsForm = ({
 						selected={formState.fontFamilyOption}
 						options={fontFamilyOptions}
 						onChange={handleFontFamilyChange}
+					/>
+					<RadioGroup
+						title='Размер Шрифта'
+						name='fontSize'
+						selected={formState.fontSizeOption}
+						options={fontSizeOptions}
+						onChange={handleFontSizeChange}
+					/>
+					<Select
+						title='Цвет Шрифта'
+						selected={formState.fontColor}
+						options={fontColors}
+						onChange={handleFontColorChange}
+					/>
+					<Separator />
+					<Select
+						title='Цвет Фона'
+						selected={formState.backgroundColor}
+						options={backgroundColors}
+						onChange={handleBackgroundColorChange}
+					/>
+					<Select
+						title='Ширина Контента'
+						selected={formState.contentWidth}
+						options={contentWidthArr}
+						onChange={handleContentWidthChange}
 					/>
 					<div className={styles.bottomContainer}>
 						<Button

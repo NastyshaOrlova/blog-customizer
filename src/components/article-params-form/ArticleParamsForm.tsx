@@ -4,6 +4,7 @@ import {
 	ArticleStateType,
 	OptionType,
 	fontFamilyOptions,
+	defaultArticleState,
 } from '../../constants/articleProps';
 import { useState } from 'react';
 import clsx from 'clsx';
@@ -31,7 +32,8 @@ export const ArticleParamsForm = ({
 		toggleForm();
 	};
 	const handleReset = () => {
-		setFormState(initialSettings);
+		setFormState(defaultArticleState);
+		onApplySettings(defaultArticleState);
 	};
 	const toggleForm = () => {
 		setIsOpen(!isOpen);

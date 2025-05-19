@@ -10,11 +10,12 @@ import {
 	backgroundColors,
 	contentWidthArr,
 } from '../../constants/articleProps';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import clsx from 'clsx';
 import { Text } from 'src/ui/text';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
+import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 
 import styles from './ArticleParamsForm.module.scss';
 import { Separator } from 'src/ui/separator';
@@ -30,6 +31,18 @@ export const ArticleParamsForm = ({
 }: ArticleParamsFormProps) => {
 	const [formState, setFormState] = useState<ArticleStateType>(initialSettings);
 	const [isOpen, setIsOpen] = useState(false);
+	const formRef = useRef<HTMLDivElement>(null);
+
+	useOutsideClickClose({
+		isOpen,
+		rootRef: formRef,
+		onChange: (newValue) => {
+			if (newValue === false) {
+				setIsOpen(false);
+			}
+		},
+	});
+
 	const handleApply = (e?: React.MouseEvent) => {
 		if (e) {
 			e.preventDefault();
@@ -83,6 +96,7 @@ export const ArticleParamsForm = ({
 		<>
 			<ArrowButton isOpen={isOpen} onClick={toggleForm} />
 			<aside
+				ref={formRef}
 				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
 				<form className={styles.form}>
 					<Text as='h2' weight={800} size={25} uppercase>

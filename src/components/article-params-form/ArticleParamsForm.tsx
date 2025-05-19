@@ -1,8 +1,14 @@
 import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
-import { ArticleStateType } from '../../constants/articleProps';
+import {
+	ArticleStateType,
+	OptionType,
+	fontFamilyOptions,
+} from '../../constants/articleProps';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { Text } from 'src/ui/text';
+import { Select } from 'src/ui/select';
 
 import styles from './ArticleParamsForm.module.scss';
 
@@ -30,6 +36,12 @@ export const ArticleParamsForm = ({
 	const toggleForm = () => {
 		setIsOpen(!isOpen);
 	};
+	const handleFontFamilyChange = (selected: OptionType) => {
+		setFormState({
+			...formState,
+			fontFamilyOption: selected,
+		});
+	};
 
 	return (
 		<>
@@ -37,6 +49,15 @@ export const ArticleParamsForm = ({
 			<aside
 				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
 				<form className={styles.form}>
+					<Text as='h2' weight={800} size={25} uppercase>
+						Задайте параметры
+					</Text>
+					<Select
+						title='Шрифт'
+						selected={formState.fontFamilyOption}
+						options={fontFamilyOptions}
+						onChange={handleFontFamilyChange}
+					/>
 					<div className={styles.bottomContainer}>
 						<Button
 							title='Сбросить'

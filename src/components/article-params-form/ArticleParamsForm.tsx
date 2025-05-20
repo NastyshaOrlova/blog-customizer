@@ -30,15 +30,15 @@ export const ArticleParamsForm = ({
 	onApplySettings,
 }: ArticleParamsFormProps) => {
 	const [formState, setFormState] = useState<ArticleStateType>(initialSettings);
-	const [isOpen, setIsOpen] = useState(false);
+	const [isFormOpen, setIsFormOpen] = useState(false);
 	const formRef = useRef<HTMLDivElement>(null);
 
 	useOutsideClickClose({
-		isOpen,
+		isOpen: isFormOpen,
 		rootRef: formRef,
 		onChange: (newValue) => {
 			if (newValue === false) {
-				setIsOpen(false);
+				setIsFormOpen(false);
 			}
 		},
 	});
@@ -55,7 +55,7 @@ export const ArticleParamsForm = ({
 		onApplySettings(defaultArticleState);
 	};
 	const toggleForm = () => {
-		setIsOpen(!isOpen);
+		setIsFormOpen(!isFormOpen);
 	};
 	const handleFontFamilyChange = (selected: OptionType) => {
 		setFormState({
@@ -94,17 +94,19 @@ export const ArticleParamsForm = ({
 
 	return (
 		<>
-			<ArrowButton isOpen={isOpen} onClick={toggleForm} />
+			<ArrowButton isOpen={isFormOpen} onClick={toggleForm} />
 			<aside
 				ref={formRef}
-				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
+				className={clsx(styles.container, {
+					[styles.container_open]: isFormOpen,
+				})}>
 				<form
+					onReset={handleReset}
 					className={styles.form}
 					onSubmit={(e) => {
 						e.preventDefault();
 						handleApply();
-					}}
-					onReset={handleReset}>
+					}}>
 					<Text as='h2' weight={800} size={25} uppercase>
 						Задайте параметры
 					</Text>

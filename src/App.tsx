@@ -3,18 +3,11 @@ import clsx from 'clsx';
 
 import { Article } from './components/article';
 import { ArticleParamsForm } from './components/article-params-form';
-import {
-	ArticleStateType,
-	defaultArticleState,
-} from './constants/articleProps';
+import { defaultArticleState } from './constants/articleProps';
 import styles from './styles/index.module.scss';
 
 export const App = () => {
 	const [articleSettings, setArticleSettings] = useState(defaultArticleState);
-
-	const handleApplySettings = (newSettings: ArticleStateType) => {
-		setArticleSettings(newSettings);
-	};
 
 	return (
 		<main
@@ -30,7 +23,7 @@ export const App = () => {
 			}>
 			<ArticleParamsForm
 				initialSettings={articleSettings}
-				onApplySettings={handleApplySettings}
+				onApplySettings={setArticleSettings}
 			/>
 			<Article />
 		</main>
